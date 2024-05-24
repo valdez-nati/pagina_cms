@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block cuerpo %}
+<div class="untree_co-section pb-0">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-7 text-center mx-auto">
+          <h2 class="section-heading gsap-reveal-hero mb-0"><strong>Registro de Usuarios</strong></h2>
+          <p class="gsap-reveal-hero">Puede consultar la lista o agregar nuevos registros y modificar los existentes.</p>
+          <div class="wave gsap-reveal-hero" >
+            <svg>
+              <path d="M10,10 L50,100 L90,50" stroke="#0389ff"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <a href="{% url 'nueusuario' %}" class="btn btn-info">Nuevo Usuario</a>
+        </div>
+        <table>
+          <tr>
+            <th>Nombre del Usuario</th>
+            <th>Usuario</th>
+            <th>Estado</th>
+            <th>Nivel</th>
+            <th>Acciones</th>
+          </tr>
+          {% for valor in lista  %}
+          <tr>
+            <td>{{valor.nombre}}</td>
+            <td>{{valor.usuario}}</td>
+            <td>{{valor.estado}}</td>
+            <td>{{valor.nivel}}</td>
+            <td><a href="{% url 'modusuario' id=valor.id %}" class="btn btn-warning">Modificar</a>
+                <a href="{% url 'borusuario' id=valor.id %}" class="btn btn-danger">Borrar</a></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

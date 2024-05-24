@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block cuerpo %}
+<div class="untree_co-section pb-0">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="row">
+          <li><a href="{% url 'acceder' %}">acceder</a></li>
+        
+        </div>
+        <div class="col-lg-7 text-center mx-auto">
+          <h2 class="section-heading gsap-reveal-hero mb-0"><strong>Bienvenido a ByteAlerta</strong></h2>
+          <p class="gsap-reveal-hero">Disfrute de su visita.</p>
+          <div class="wave gsap-reveal-hero" >
+            <svg>
+              <path d="M10,10 L50,100 L90,50" stroke="#0389ff"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mb-4" ></div>
+      <div class="untree_co-section pb-0" id="about-section" >
+          <div class="container">
+            {% for noticia in contex %}
+              <div class="row mb-4">
+                <div class="col-12">
+                  <div class="card">
+                    {% if noticia.imagen %}
+                      <img src="/media/imagenes/{{ noticia.imagen }}"  style="max-width: 400px;">
+                    {% endif %}
+                    <div class="card-body">
+                      <h5 class="card-title">{{ noticia.titudo }}</h5>
+                      <p class="card-text">Autor: {{ noticia.autor.nombre }}</p>
+                      <p class="card-text">Fecha: {{ noticia.fecha }}</p>
+                      <p class="card-text" id="about-section">{{ noticia.cuerpo }}</p>                
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+     </div>
+</div>
+{% endblock %}

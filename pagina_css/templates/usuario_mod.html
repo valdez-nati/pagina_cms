@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block cuerpo %}
+<div class="untree_co-section pb-0">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-7 text-center mx-auto">
+          <h2 class="section-heading gsap-reveal-hero mb-0"><strong>Modificar Usuario</strong></h2>
+          <div class="wave gsap-reveal-hero" >
+            <svg>
+              <path d="M10,10 L50,100 L90,50" stroke="#0389ff"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nombre">Nombre del Usuario:</label>
+                    <input type="text" id="nombre" name="nombre" value="{{ usuario.nombre }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" value="{{ usuario.usuario }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="clave">Contraseña:</label>
+                    <input type="password" id="clave" name="clave" value="{{ usuario.clave }}" class="form-control">
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 form-group">
+                      <label>Estado:</label>
+                      <input type="text" name="estado" value="{{ usuario.estado }}" class="form-control">
+                    </div>
+                    <div class="col-lg-4 form-group">
+                      <label>Nivel:</label>
+                      <input type="text" name="nivel" value="{{ usuario.nivel }}" class="form-control">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 form-group">
+                      <input type="submit" class="btn btn-black" value="Guardar Cambios">
+                    </div>
+                <!-- Otros campos y botones de formulario aquí -->
+            </form>
+            
+        </div>
+        
+      </div>
+    </div>
+  </div>
+{% endblock %}
