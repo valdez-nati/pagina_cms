@@ -1,43 +1,67 @@
 {% extends 'base.html' %}
 
 {% block cuerpo %}
-<div class="untree_co-section pb-0">
+<div class="untree_co-section py-5">
     <div class="container">
-      <div class="row mb-4">
-        <div class="col-lg-7 text-center mx-auto">
-          <h2 class="section-heading gsap-reveal-hero mb-0"><strong>Registro de Usuarios</strong></h2>
-          <p class="gsap-reveal-hero">Puede consultar la lista o agregar nuevos registros y modificar los existentes.</p>
-          <div class="wave gsap-reveal-hero" >
-            <svg>
-              <path d="M10,10 L50,100 L90,50" stroke="#0389ff"></path>
-            </svg>
-          </div>
+        <div class="row mb-5">
+            <div class="col-lg-8 text-center mx-auto">
+                <h2 class="section-heading gsap-reveal-hero mb-3"><strong>Registro de Usuarios</strong></h2>
+                <p class="gsap-reveal-hero">Puede consultar la lista o agregar nuevos registros y modificar los existentes.</p>
+                <div class="wave gsap-reveal-hero">
+                    <svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 10L50 40L90 20L130 40L170 20L190 40" stroke="#4E68F2" stroke-width="4"/>
+                    </svg>
+                </div>
+                <a href="{% url 'acceder' %}" style="background-color: #0389ff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Inicio</a>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <a href="{% url 'nueusuario' %}" class="btn btn-info">Nuevo Usuario</a>
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="{% url 'nueusuario' %}" class="btn btn-primary mb-4">Nuevo Usuario</a>
+                
+                <div class="table-responsive">
+                    <table id="table" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre del Usuario</th>
+                                <th>Usuario</th>
+                                <th>Estado</th>
+                                <th>Nivel</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for valor in lista %}
+                            <tr>
+                                <td>{{ valor.nombre }}</td>
+                                <td>{{ valor.usuario }}</td>
+                                <td>{{ valor.estado }}</td>
+                                <td>{{ valor.nivel }}</td>
+                                <td>
+                                    <a href="{% url 'modusuario' id=valor.id %}" class="btn btn-warning btn-sm mr-2">Modificar</a>
+                                    <a href="{% url 'borusuario' id=valor.id %}" class="btn btn-danger btn-sm">Borrar</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <table>
-          <tr>
-            <th>Nombre del Usuario</th>
-            <th>Usuario</th>
-            <th>Estado</th>
-            <th>Nivel</th>
-            <th>Acciones</th>
-          </tr>
-          {% for valor in lista  %}
-          <tr>
-            <td>{{valor.nombre}}</td>
-            <td>{{valor.usuario}}</td>
-            <td>{{valor.estado}}</td>
-            <td>{{valor.nivel}}</td>
-            <td><a href="{% url 'modusuario' id=valor.id %}" class="btn btn-warning">Modificar</a>
-                <a href="{% url 'borusuario' id=valor.id %}" class="btn btn-danger">Borrar</a></td>
-          </tr>
-          {% endfor %}
-        </table>
-      </div>
     </div>
-  </div>
+</div>
+<!-- Asegúrate de incluir jQuery primero -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Luego, incluye DataTables -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#table').DataTable({
+            "language": {
+                "search": "Buscar:"
+            },
+        });
+    });
+</script>
 {% endblock %}

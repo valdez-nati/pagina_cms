@@ -18,6 +18,7 @@ class noticias(models.Model):
     imagen = models.CharField(max_length=200)
     grupo = models.ForeignKey(grupos, on_delete=models.RESTRICT)
     autor = models.ForeignKey(usuarios, on_delete=models.RESTRICT)
+    visible = models.BooleanField(default=True)
     
 class comentarios(models.Model):
     cuerpo = models.CharField(max_length=200)

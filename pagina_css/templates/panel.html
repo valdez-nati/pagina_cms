@@ -3,34 +3,43 @@
 {% block cuerpo %}
 <div class="untree_co-section pb-0">
     <div class="container">
-      <div class="row mb-4">
-        <div class="col-lg-7 text-center mx-auto">
-          <h2 class="section-heading gsap-reveal-hero mb-0"><strong>Panel de control</strong></h2>
-          <p class="gsap-reveal-hero">Disfrute de su visita.</p>
-          <div class="wave gsap-reveal-hero" >
-            <svg>
-              <path d="M10,10 L50,100 L90,50" stroke="#0389ff"></path>
-            </svg>
-          </div>
+        <div class="row mb-4">
+            <div class="col-lg-7 text-center mx-auto">
+                <h2 class="section-heading gsap-reveal-hero mb-0"><strong>Panel de Control</strong></h2>
+                <p class="gsap-reveal-hero">Disfrute de su visita.</p>
+                <div class="wave gsap-reveal-hero">
+                    <svg>
+                        <path d="M10,10 L50,100 L90,50" stroke="#0389ff"></path>
+                    </svg>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <p><strong>Usuario:</strong>{{nombre_usuario}}</p>
-      <ul>
-        <li><a href="{% url 'verusuario' %}">Modificar Usuarios</a></li>
-      </ul>
-      <ul>
-        <li> <a  href="{% url 'salir' %}">Salir</a></li>
-      </ul>
-      <ul>
-        <li> <a  href="{% url 'nuenoticia' %}">Nueva Noticia</a></li>
-      </ul>
-      <ul>
-        <li> <a  href="{% url 'vernoticia' %}">Ver Noticia</a></li>
-      </ul>
-      </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body text-center">
+                        <p><strong>Usuario:</strong> {{ nombre_usuario }}</p>
+                        <hr>
+                        {% if nivel_usuario == 'ADMINISTRADOR' %}
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a class="btn btn-primary btn-block" href="{% url 'verusuario' %}">Usuarios</a></li>
+                        </ul>
+                        {% endif %}
+                        {% if nivel_usuario == 'ADMINISTRADOR' or nivel_usuario == 'EDITOR' %}
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a class="btn btn-success btn-block" href="{% url 'nuenoticia' %}">Nueva Noticia</a></li>
+                        </ul>
+                        {% endif %}
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a class="btn btn-info btn-block" href="{% url 'vernoticia' %}">Ver Noticia</a></li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li><a class="btn btn-danger btn-block" href="{% url 'salir' %}">Salir</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-
-  
+</div>
 {% endblock %}

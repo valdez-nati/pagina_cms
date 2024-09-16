@@ -12,11 +12,17 @@
             </svg>
           </div>
         </div>
+        <a href="{% url 'acceder' %}" style="background-color: #0389ff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Inicio</a>
       </div>
-      <div class="row">
-        <div class="col-lg-12">
+    
           <form action="{% url 'nuenoticia' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="col-lg-12 form-group">
+                  <label>{{m_error}}</label>
+                  
+              </div>
             <div class="row">
                 <div class="col-lg-6 form-group">
                     <label>Titulo:</label>

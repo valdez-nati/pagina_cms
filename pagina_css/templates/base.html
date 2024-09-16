@@ -1,10 +1,4 @@
-{%load static%}
-<!-- /*
-* Template Name: Minimal
-* Template Author: Untree.co
-* Author URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -12,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="author" content="Untree.co">
-  <link rel="shortcut icon" href="favicon.png">
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}">
 
   <meta name="description" content="" />
   <meta name="keywords" content="" />
@@ -21,55 +15,80 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=PT+Mono&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
-  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'%}">
-  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'%}">
-  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'%}">
-  <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css'%}">
-  <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css'%}">
-  <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css'%}">
-  <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css'%}">
-  <link rel="stylesheet" href="{% static 'css/aos.css'%}">
-  <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  {% block customCSS %}
+  <style>
+    /* Estilos personalizados en azul */
+    .text-primary {
+      color: #0389ff !important;
+    }
 
+    .bg-primary {
+      background-color: #0389ff !important;
+    }
+
+    .border-primary {
+      border-color: #0389ff !important;
+    }
+
+    .btn-primary {
+      background-color: #0389ff;
+      border-color: #0389ff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0277d4;
+      border-color: #0277d4;
+    }
+
+    .alert-primary {
+      background-color: #e3f2fd;
+      border-color: #b3e5fc;
+    }
+
+    .alert-primary .alert-link {
+      color: #01579b;
+    }
+
+    .card {
+      border-radius: 0.5rem;
+    }
+  </style>
+  {% endblock %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+  <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+  <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+  <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="100">
 
-  
+  {% block cuerpo %}
+  {% endblock %}
 
-{% block cuerpo  %}
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+  <script src="{% static 'js/aos.js' %}"></script>
+  <script src="{% static 'js/wave-animate.js' %}"></script>
+  <script src="{% static 'js/circle-progress.js' %}"></script>
+  <script src="{% static 'js/imagesloaded.pkgd.js' %}"></script>
+  <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'js/TweenMax.min.js' %}"></script>
+  <script src="{% static 'js/ScrollMagic.min.js' %}"></script>
+  <script src="{% static 'js/scrollmagic.animation.gsap.min.js' %}"></script>
 
-{% endblock %}
+  <script src="{% static 'js/custom.js' %}"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+</body>
 
-<div class="untree_co-section pb-0">
-    
-  
-    
-        
-
-          
-
-    <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
-    <script src="{% static 'js/popper.min.js'%}"></script>
-    <script src="{% static 'js/bootstrap.min.js'%}"></script>
-    <script src="{% static 'js/owl.carousel.min.js'%}"></script>
-    <script src="{% static 'js/jquery.animateNumber.min.js'%}"></script>
-    <script src="{% static 'js/jquery.waypoints.min.js'%}"></script>
-    <script src="{% static 'js/jquery.fancybox.min.js'%}"></script>
-    <script src="{% static 'js/aos.js'%}"></script>
-    <script src="{% static 'js/wave-animate.js'%}"></script>
-    <script src="{% static 'js/circle-progress.js'%}"></script>
-    <script src="{% static 'js/imagesloaded.pkgd.js'%}"></script>
-    <script src="{% static 'js/isotope.pkgd.min.js'%}"></script>
-    <script src="{% static 'js/jquery.easing.1.3.js'%}"></script>
-    <script src="{% static 'js/TweenMax.min.js'%}"></script>
-    <script src="{% static 'js/ScrollMagic.min.js'%}"></script>
-    <script src="{% static 'js/scrollmagic.animation.gsap.min.js'%}"></script>
-
-
-    <script src="{% static 'js/custom.js'%}"></script>
-    
-  </body>
-
-  </html>
+</html>

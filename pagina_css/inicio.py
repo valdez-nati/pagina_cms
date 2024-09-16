@@ -3,9 +3,11 @@ from .models import usuarios,noticias
 import os
 from pathlib import Path
 from django.conf import settings
+from .noticias import vern
 
 def inicio(request):
-    noticias_ver = noticias.objects.all()
+        # Ordena las noticias por fecha de manera descendente
+    noticias_ver = noticias.objects.filter(visible=True).order_by('fecha')
     noticias_con_imagen = []
     for noticia in noticias_ver:
         if noticia.imagen and hasattr(noticia.imagen, 'path'):  # Verifica si noticia.imagen es válido y tiene el atributo 'path'
@@ -28,7 +30,8 @@ def acceder(request):
             #if request.session['codigo_usuario']>0:
                 variables={}
                 variables['nombre_usuario']= request.session['nombre_usuario']
-                print(variables)
+                variables['nivel_usuario'] = request.session['nivel_usuario']
+                print("Variable II",variables)
                 return render(request, 'panel.html',variables)
         else:
             return render(request, 'acceder.html')
@@ -44,6 +47,9 @@ def acceder(request):
                 request.session['nombre_usuario']=verificar_usuario[0].nombre
                 request.session['nivel_usuario']=verificar_usuario[0].nivel
                 variables['nombre_usuario']= request.session['nombre_usuario']
+                variables['nivel_usuario'] = request.session['nivel_usuario']
+                print(request.session['nivel_usuario'])
+                print("Variable",variables)
                 return render(request, 'panel.html',variables)
             else:
                 variables['m_error']='La contraseña es incorrecta'
@@ -53,7 +59,15 @@ def acceder(request):
                 return render(request, 'acceder.html', variables)
         
 def salir(request):
-    del request.session['codigo_usuario']
-    del request.session['nombre_usuario']
-    del request.session['nivel_usuario']
-    return redirect('inicio')
+     # Eliminar toda la sesión del usuario
+    request.session.flush()
+    
+    # Crear una respuesta de redirección
+    response = redirect('inicio')
+    
+    # Añadir encabezados para evitar el caché
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate' # HTTP 1.1
+    response['Pragma'] = 'no-cache' # HTTP 1.0
+    response['Expires'] = '0' # Proxies
+    
+    return response

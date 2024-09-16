@@ -10,6 +10,7 @@ class SerialNoticias(serializers.ModelSerializer):
             'fecha',
             'cuerpo',
             'imagen',
+            'autor',
         ]
         
 class SerialDetalleNoticias(serializers.ModelSerializer):
@@ -57,3 +58,12 @@ class SerialGrupo(serializers.ModelSerializer):
         ]
 
 
+class NoticiasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = noticias
+        fields = '__all__'
+
+class GruposSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = grupos
+        fields = '__all__'

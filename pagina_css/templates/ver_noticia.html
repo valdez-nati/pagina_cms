@@ -1,134 +1,107 @@
 {% extends 'base.html' %}
 
 {% block cuerpo %}
-<div class="untree_co-section pb-0">
-    <div class="container">
-        <div class="row mb-4">
-            <div class="col-lg-7 text-center mx-auto">
-                <h2 class="section-heading gsap-reveal-hero mb-0"><strong>Sección de Noticias</strong></h2>
-                <p class="gsap-reveal-hero">Disfrute de su visita.</p>
-                <div class="wave gsap-reveal-hero" >
-                    <svg>
-                        <path d="M10,10 L50,100 L90,50" stroke="#0389ff"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <ul>
-            <li><a href="{% url 'salir' %}">Salir</a></li>
-            <li><a href="{% url 'nuenoticia' %}">Nueva Noticia</a></li>
-            <li><a href="{% url 'acceder' %}">Inicio</a></li>
-        </ul>
+    <div class="container py-5">
+        <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-danger" href="{% url 'salir' %}">Salir</a>
     </div>
-</div>
-<div class="row mb-4" ></div>
-<div class="untree_co-section pb-0" id="about-section" >
-    <div class="container">
-      {% for noticia in contex %}
-        <div class="row mb-4">
-          <div class="col-12">
-            <div>
-                <a href="{% url 'modnoticia' id=noticia.id %}" class="btn btn-warning">Modificar</a>
-                <a href="{% url 'bornoticia' id=noticia.id %}" class="btn btn-danger">Borrar</a>
-            </div>
-            <div class="card">
-              {% if noticia.imagen %}
-                <img src="/media/imagenes/{{ noticia.imagen }}"  style="max-width: 400px;">
-              {% endif %}
-              <div class="card-body">
-                <h5 class="card-title">{{ noticia.titudo }}</h5>
-                <p class="card-text">Autor: {{ noticia.autor.nombre }}</p>
-                <p class="card-text">Fecha: {{ noticia.fecha }}</p>
-                <p class="card-text" >{{ noticia.cuerpo }}</p>
-                <!-- Formulario de comentario -->
-                <div  id="about-section">
-                  <form method="post" action="{% url 'nuecomen' %}">
-                    {% csrf_token %}
-                    <div class="row">
-                      <input type="hidden" name="noticia_id" value="{{ noticia.id }}">
-                      <div class="col-lg-6 form-group">
-                        <br>
-                        <textarea name="cuerpo"   class="form-control" placeholder="Escribe un comentario"></textarea>
-                      </div>
-                      <div class="col-lg-6 form-group">
-                        <label>Visible:</label>                
-                        <select id="visible" name="visible" class="form-control">
-                          <option value="SI" >Sí</option>
-                          <option value="NO">No</option>                      
-                        </select>
-                      </div> 
-                    </div>
-                    <div class="row">
-                      <div class="col-12 form-group">
-                        <button type="submit" class="btn btn-primary mt-2">Comentar</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <!-- Mostrar comentarios asociados -->
-                <div class="owl-carousel owl-3-slider">
-                  {% for comentario in noticia.comentarios %}
-                    <li>
-                      <p>{{ comentario.fecha }}</p>
-                      <p>{{ comentario.autor.nombre }}</p>
-                      <p>{{ comentario.cuerpo }}</p>
-                    </li>
-                  {% empty %}
-                    <li>No hay comentarios aún.</li>
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
-          </div>
+    <header class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Noticias del Día</h1>
+        <p class="lead">Mantente informado con las últimas actualizaciones</p>
+    </header>
+
+    <div class="row mb-4">
+        <div class="col-md-6 mx-auto">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar noticias...">
         </div>
-      {% endfor %}
     </div>
-  </div>
-<!--
-<div class="untree_co-section pb-0" id="about-section">
-  <div class="container">
-      <div class="row justify-content-center">
-          {% for noticia in contex %}
-          <div class="col-lg-6 mb-4">
-              <div class="card">
-                  {% if noticia.imagen %}
-                  <img src="{{ noticia.imagen_url }}" alt="Image" class="card-img-top">
-                  {% endif %}
-                  <div class="card-body">
-                      <h5 class="card-title">{{ noticia.titudo }}</h5>
-                      <p class="card-text">Autor: {{ noticia.autor.nombre }}</p>
-                      <p class="card-text">{{ noticia.cuerpo }}</p>
-                  </div>
-              </div>
-          </div>
-          {% endfor %}
-      </div>
-  </div>
-</div>
 
-
-<div class="owl-carousel owl-3-slider">
-    {% if lista %}
-        {% for comentario in comen_ver %}
-            <div class="item">
-                <div class="testimonial-v1">
-                    <div class="mb-4">
-                        <h3>{{ comentario.fecha }}</h3>
-                        <!-- Puedes ajustar esta parte para mostrar otros campos de la noticia -->
-                        <!-- <span class="caption">Autor: {{ noticia.autor }}</span> -->
-               <!--     </div>
-                    <blockquote>
-                        <p>{{ comentario.cuerpo }}</p>
-                   </blockquote>
-                </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <a href="{% url 'bornoticia' id=noticia.id %}" class="btn btn-danger">Borrar</a></td>
-
         {% endfor %}
-
-    {% else %}
-        <p>No hay noticias disponibles.</p>
     {% endif %}
+
+    <div class="row g-4">
+        {% for noticia in contex %}
+            <div class="col-12 search-item">
+                <div class="card h-100 shadow-sm">
+                    {% if noticia.imagen %}
+                        <img src="/media/imagenes/{{ noticia.imagen }}" class="card-img-top img-fluid" alt="{{ noticia.titudo }}" style="max-width: 50%; max-height: 60%; object-fit: cover; display: block; margin-left: auto; margin-right: auto;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ noticia.titudo }}</h5>
+                        <p class="card-text">{{ noticia.cuerpo}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{ noticia.fecha|date:"d M Y" }}</small>
+                            <span class="badge bg-primary">{{ noticia.grupo.grupo }}</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#comments-{{ noticia.id }}" aria-expanded="false">
+                            Ver comentarios
+                        </button>
+                        {% if nivel_usuario == 'ADMINISTRADOR' or nivel_usuario == 'EDITOR' %}
+                            <a href="{% url 'modnoticia' id=noticia.id %}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="{% url 'bornoticia' id=noticia.id %}" class="btn btn-warning btn-sm">Eliminar</a>
+                        {% endif %}
+                    </div>
+                    <div class="collapse" id="comments-{{ noticia.id }}">
+                        <div class="card-body border-top">
+                            <h6 class="mb-3">Comentarios</h6>
+                            {% for comentario in noticia.comentarios %}
+                                <div class="mb-3 p-3 bg-light rounded">
+                                    <p class="mb-1">{{ comentario.cuerpo }}</p>
+                                    <small class="text-muted">Por {{ comentario.autor.nombre }} el {{ comentario.fecha|date:"d M Y" }}</small>
+                                    {% if nivel_usuario == 'ADMINISTRADOR' or nivel_usuario == 'EDITOR' %}
+                                        <div class="mt-2">
+                                            <form action="{% url 'borcomen' comentario.id %}" method="post" class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                            </form>
+                                            <form method="post" action="{% url 'modcomen' comentario.id %}" class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" name="visible" value="{% if comentario.visible == 'SI' %}NO{% else %}SI{% endif %}" 
+                                                    class="btn btn-{% if comentario.visible == 'SI' %}primary{% else %}success{% endif %} btn-sm">
+                                                    {% if comentario.visible == 'SI' %}Ocultar{% else %}Mostrar{% endif %}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% empty %}
+                                <p class="text-muted">No hay comentarios aún.</p>
+                            {% endfor %}
+                            <form method="post" action="{% url 'nuecomen' %}" class="mt-3">
+                                {% csrf_token %}
+                                <input type="hidden" name="noticia_id" value="{{ noticia.id }}">
+                                <div class="mb-3">
+                                    <textarea name="cuerpo" class="form-control" rows="2" placeholder="Escribe un comentario"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
 </div>
--->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var value = $(this).val().toLowerCase();
+            $('.search-item').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+    
+    });
+</script>
 {% endblock %}

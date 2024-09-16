@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from rest_framework import generics
-from .serelizador import SerialNoticias, SerialDetalleNoticias,SerialUsuario,SerialComentarios,SerialGrupo
+from .serelizador import SerialNoticias, SerialDetalleNoticias,SerialUsuario,SerialComentarios,SerialGrupo,NoticiasSerializer, GruposSerializer
 from .models import noticias, usuarios,comentarios,grupos
+from rest_framework import generics
 
-
+#Retriew  para modificar 
 class NoticiasAPILista(generics.ListAPIView):
     queryset= noticias.objects.all()
     serializer_class=SerialNoticias
@@ -29,3 +29,17 @@ class ComentarioAPILista(generics.ListAPIView):
 class GruposAPILista(generics.ListAPIView):
     queryset= grupos.objects.all()
     serializer_class=SerialGrupo
+    
+
+class ComentariosAPINuevo(generics.CreateAPIView):
+    queryset=comentarios.objects.all()
+    serializer_class=SerialComentarios
+    
+class ComentariosAPIModificar(generics.RetrieveUpdateAPIView):
+    lookup_field='id'
+    queryset=comentarios.objects.all()
+    serializer_class=SerialComentarios
+
+class ComentariosAPIBorrar(generics.DestroyAPIView):
+    lookup_field='id'
+    queryset=comentarios.objects.all()
